@@ -273,25 +273,33 @@ void handle_config() //sends form to /submit_to_page
   ADD_INPUT_CELL (AppConfig.access_point[0][indx_KEY], EpKey0);
   END_ROW;
 
+#if (numAccessPoints > 1)
   ADD_ROW_STRING ("EP SSID1: ");
   ADD_INPUT_CELL (AppConfig.access_point[1][indx_SSID], EpSSID1);
   ADD_INPUT_CELL (AppConfig.access_point[1][indx_KEY], EpKey1);
   END_ROW;
+#endif
 
+#if (numAccessPoints > 2)
   ADD_ROW_STRING ("EP SSID2: ");
   ADD_INPUT_CELL (AppConfig.access_point[2][indx_SSID], EpSSID2);
   ADD_INPUT_CELL (AppConfig.access_point[2][indx_KEY], EpKey2);
   END_ROW;
+#endif
 
+#if (numAccessPoints > 3)
   ADD_ROW_STRING ("EP SSID3: ");
   ADD_INPUT_CELL (AppConfig.access_point[3][indx_SSID], EpSSID3);
   ADD_INPUT_CELL (AppConfig.access_point[3][indx_KEY], EpKey3);
   END_ROW;
+#endif
 
+#if (numAccessPoints > 4)
   ADD_ROW_STRING ("EP SSID4: ");
   ADD_INPUT_CELL (AppConfig.access_point[4][indx_SSID], EpSSID4);
   ADD_INPUT_CELL (AppConfig.access_point[4][indx_KEY], EpKey4);
   END_ROW;
+#endif
 
   ADD_ROW_STRING ("EP IP: ");
   ADD_INPUT_CELL (AppConfig.EpIP[0], EpIP_0);
@@ -381,7 +389,7 @@ void handle_config_update()  //gets form from /config
     Serial.println(server.arg ("EpKey0" ));
     strcpy(AppConfig.access_point[0][indx_KEY], server.arg ("EpKey0" ).c_str());
 
-
+#if (numAccessPoints > 1)
     Serial.print(F("Writing to EEPROM with new Ep SSID1: "));
     Serial.println(server.arg ("EpSSID1" ));
     strcpy(AppConfig.access_point[1][indx_SSID], server.arg ("EpSSID1" ).c_str());
@@ -389,8 +397,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key1: "));
     Serial.println(server.arg ("EpKey1" ));
     strcpy(AppConfig.access_point[1][indx_KEY], server.arg ("EpKey1" ).c_str());
+#endif
 
-
+#if (numAccessPoints > 2)
     Serial.print(F("Writing to EEPROM with new Ep SSID2: "));
     Serial.println(server.arg ("EpSSID2" ));
     strcpy(AppConfig.access_point[2][indx_SSID], server.arg ("EpSSID2" ).c_str());
@@ -398,7 +407,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key2: "));
     Serial.println(server.arg ("EpKey2" ));
     strcpy(AppConfig.access_point[2][indx_KEY], server.arg ("EpKey2" ).c_str());
+#endif
 
+#if (numAccessPoints > 3)
     Serial.print(F("Writing to EEPROM with new Ep SSID3: "));
     Serial.println(server.arg ("EpSSID3" ));
     strcpy(AppConfig.access_point[3][indx_SSID], server.arg ("EpSSID3" ).c_str());
@@ -406,7 +417,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key3: "));
     Serial.println(server.arg ("EpKey3" ));
     strcpy(AppConfig.access_point[3][indx_KEY], server.arg ("EpKey3" ).c_str());
+#endif
 
+#if (numAccessPoints > 4)
     Serial.print(F("Writing to EEPROM with new Ep SSID4: "));
     Serial.println(server.arg ("EpSSID4" ));
     strcpy(AppConfig.access_point[4][indx_SSID], server.arg ("EpSSID4" ).c_str());
@@ -414,7 +427,7 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key4: "));
     Serial.println(server.arg ("EpKey4" ));
     strcpy(AppConfig.access_point[4][indx_KEY], server.arg ("EpKey4" ).c_str());
-
+#endif
 
     Serial.println(F("Writing to EEPROM with new Ep IP: "));
     Serial.print(server.arg ("EpIP_0" )); Serial.print(F(".")); Serial.print(server.arg ("EpIP_1" )); Serial.print(F(".")); Serial.print(server.arg ("EpIP_2" )); Serial.print(F(".")); Serial.println(server.arg ("EpIP_3" ));
@@ -436,7 +449,7 @@ void handle_config_update()  //gets form from /config
     Serial.println(server.arg ("EpKey0" ));
     strcpy(AppConfig.access_point[0][indx_KEY], server.arg ("EpKey0" ).c_str());
 
-
+#if (numAccessPoints > 1)
     Serial.print(F("Writing to EEPROM with new Ep SSID1: "));
     Serial.println(server.arg ("EpSSID1" ));
     strcpy(AppConfig.access_point[1][indx_SSID], server.arg ("EpSSID1" ).c_str());
@@ -444,8 +457,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key1: "));
     Serial.println(server.arg ("EpKey1" ));
     strcpy(AppConfig.access_point[1][indx_KEY], server.arg ("EpKey1" ).c_str());
+#endif
 
-
+#if (numAccessPoints > 2)
     Serial.print(F("Writing to EEPROM with new Ep SSID2: "));
     Serial.println(server.arg ("EpSSID2" ));
     strcpy(AppConfig.access_point[2][indx_SSID], server.arg ("EpSSID2" ).c_str());
@@ -453,7 +467,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key2: "));
     Serial.println(server.arg ("EpKey2" ));
     strcpy(AppConfig.access_point[2][indx_KEY], server.arg ("EpKey2" ).c_str());
+#endif
 
+#if (numAccessPoints > 3)
     Serial.print(F("Writing to EEPROM with new Ep SSID3: "));
     Serial.println(server.arg ("EpSSID3" ));
     strcpy(AppConfig.access_point[3][indx_SSID], server.arg ("EpSSID3" ).c_str());
@@ -461,7 +477,9 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key3: "));
     Serial.println(server.arg ("EpKey3" ));
     strcpy(AppConfig.access_point[3][indx_KEY], server.arg ("EpKey3" ).c_str());
+#endif
 
+#if (numAccessPoints > 4)
     Serial.print(F("Writing to EEPROM with new Ep SSID4: "));
     Serial.println(server.arg ("EpSSID4" ));
     strcpy(AppConfig.access_point[4][indx_SSID], server.arg ("EpSSID4" ).c_str());
@@ -469,7 +487,7 @@ void handle_config_update()  //gets form from /config
     Serial.print(F("Writing to EEPROM with new Ep Key4: "));
     Serial.println(server.arg ("EpKey4" ));
     strcpy(AppConfig.access_point[4][indx_KEY], server.arg ("EpKey4" ).c_str());
-
+#endif
 
     Serial.print(F("Writing to EEPROM with new AP SSID: "));
     Serial.println(server.arg ("ApSSID" ));

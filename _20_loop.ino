@@ -151,6 +151,8 @@ void loop()
   }
   if (AppConfig.Mode == free_run) //AppConfig.Flags.bIsModeAuto) //if we are in run mode then do the software PWM
   {
+    analogWrite(0, on_time);
+    //analogWrite(0, 5);
     // multiples of 20mS which is 1 period of 50Hz.
     if (((currentMillis - previous_ON_Millis) > (on_time * 20)) && (PWM_state == 1) && off_time)
     {

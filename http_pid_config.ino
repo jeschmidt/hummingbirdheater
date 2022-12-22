@@ -47,6 +47,10 @@ void handle_pid_config()
   ADD_INPUT_CELL (AppConfig.PID[cal], CAL);
   END_ROW;
 
+  ADD_ROW_STRING ("PWMfreq: ");
+  ADD_INPUT_CELL (AppConfig.PWMfreq, PWMfreq);
+  END_ROW;
+
   END_TABLE;
 
   END_FORM;
@@ -100,6 +104,10 @@ void handle_pid_config_update()
   Serial.println(F("Writing to EEPROM with new CAL: "));
   Serial.println(server.arg ("CAL" ));
   AppConfig.PID[cal] = server.arg ("CAL" ).toInt();
+
+  Serial.println(F("Writing to EEPROM with new PWMfreq: "));
+  Serial.println(server.arg ("PWMfreq" ));
+  AppConfig.PWMfreq = server.arg ("PWMfreq" ).toInt();
 
   START_HTML;
   START_PAGE(AppConfig.EpHostname, "Updating PID Configuration");

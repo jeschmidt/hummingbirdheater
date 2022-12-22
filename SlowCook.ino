@@ -180,17 +180,12 @@ enum modes
 //int heating_stage = stage1;
 typedef struct APP_CONFIG //AppConfig
 {
-  char E_sign[16] = "AABbCcDdEe68"; //This is a signature that is used to determine
+  char E_sign[16] = "AABbCcDdEe6b"; //This is a signature that is used to determine
   //if EEPROM is to be updated with the hardcoded
   //values or continue using previously saved values
   //must be at the start of the struct
 #ifdef real_credentials
   #error
-#endif
-
-#if __has_include("creds.h") 
-//# include "myinclude.h"
- #error
 #endif
 
 #include "creds.h" //contains SSID/KEY pairs
@@ -199,8 +194,8 @@ typedef struct APP_CONFIG //AppConfig
 //#endif
   //Default Configs as EP End Point
 
-  char EpHostname[15] = "slowcook"; //End Point Hostname
-  char EpControlHostname[15] = "slowcooker"; //If we need to send UDP messages to another controller. Not used here
+  char EpHostname[15] = "hummingbird"; //End Point Hostname
+  char EpControlHostname[15] = "hummingbird"; //If we need to send UDP messages to another controller. Not used here
 
   //the requirement to statically seems to have been mitigated by WiFi.persistent(false); in _init.h
   uint8_t EpIP[4] = {172, 16, 10, 220}; //I have issues when a Cisco Router issues the IP address.
@@ -209,15 +204,15 @@ typedef struct APP_CONFIG //AppConfig
   uint8_t EpDNS[4] = {172, 16, 0, 1};
 
   //Default Configs as AP Access Point so it can be configured for a different network
-  char ApSSID[32] = "slowcook"; //Max 32 Chars
+  char ApSSID[32] = "hummingbird"; //Max 32 Chars
   char ApKey[64];
   uint8_t ApIP[4] = {192, 168, 12, 1};
 
   uint8_t ApMASK[4] = {255, 255, 255, 0};
   uint8_t ApGW[4] = {192, 168, 12, 1};
 
-  //               sp1 , sp2 , sp1td, sp2td,  kp , ki  , kd , mvmax , mvmin, cal,  tc (timeconstant)
-  float PID[11] = {72.5, 57.2, 4    , 360    ,  0.5 , 0.4 , 0.5 , 140.0 ,   0  ,  0 , 5000}; //
+  //              sp1, sp2, sp1td, sp2td,  kp,  ki,  kd,  mvmax, mvmin, cal, tc (timeconstant)
+  float PID[11] = {5,  10,  0,     0,      0.5, 0.4, 0.5, 140.0, 0,     0,   5000}; //
   uint8_t Mode = 0;
   struct FLAGS
   {
@@ -232,6 +227,8 @@ typedef struct APP_CONFIG //AppConfig
     //  } Flags = { 0, 1, 0, 1, 0, 1, 0, 0};//Leftmost is b7 use static
   } Flags = { 0, 1, 0, 1, 0, 0, 0, 0};//Leftmost is b7 use dhcp
   // */// Flag structure
+
+  uint16_t PWMfreq = 100;
 } ;
 
 APP_CONFIG AppConfig;
@@ -241,6 +238,37 @@ ESP8266WebServer server(80); //instantiate server object of type class ESP8266We
 HTTPClient http;  //instantiate http object of type class HTTPClient
 #include "helpers.h"
 #include "mdns_query.h"
-#include "hbeat.h"
+
+#if 0 
+void sendHeartBeat(void)
+{
+  IPAddress ipaddr;
+  char buffers [200];
+  //char ipaddr[50];
+  ipaddr = WiFi.localIP();//.toString();
+  //Serial.println(F("Sending HeartBeat ... " );
+
+  sprintf(buffers, "%shn=%s&ip=%03d.%03d.%03d.%03d&ticks=%010d&heat=%06.2f&Humidity=%06.2f&pid=%03d&err=%06.2f&iterm=%06.2f&dTerm=%06.2f&output=%1d&ms=%010d",
+          URL_Heartbeat, AppConfig.EpHostname, ipaddr[0], ipaddr[1], ipaddr[2], ipaddr[3], ticks, currentHeat, currentHumidity, CV, error, iTerm, dTerm, getPinMode(HEATER), millis());
+
+  // http.begin(URL_Heartbeat + String(AppConfig.EpHostname) + "&ip=" + WiFi.localIP().toString() + buffers);//"&millis=" + millis() + "&joto=" +  currentHeat + "&hum=" + currentHumidity);
+  http.begin(buffers);//"&millis=" + millis() + "&joto=" +  currentHeat + "&hum=" + currentHumidity);
+  Serial.print(buffers);
+  int httpCode = http.GET();
+  Serial.print(F(" Http Resp: "));
+  Serial.println(httpCode);
+  /*  if (httpCode == HTTP_CODE_OK)
+    {
+      String payload = http.getString();
+      Serial.println(payload);
+    }
+  */
+  //sprintf(buffers,"%s,%03d.%03d.%03d.%03d",AppConfig.EpHostname,ipaddr[0],ipaddr[1],ipaddr[2],ipaddr[3]);
+  //Serial.println(buffers);
+  http.end();
+}
+#endif
+
+
 #include "pid.h"
 #include "webSocketEvent.h"

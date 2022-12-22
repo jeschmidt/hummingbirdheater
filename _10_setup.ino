@@ -35,4 +35,7 @@ void setup()
 #ifdef USE_DHT
   dht.begin();
 #endif
+
+  analogWriteFreq(AppConfig.PWMfreq);
+  analogWriteRange(255);
 }

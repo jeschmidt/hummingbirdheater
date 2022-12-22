@@ -51,34 +51,37 @@ void OutAppConfig()
   Serial.print(F("Ep Key0: "));
   Serial.println(AppConfig.access_point[0][indx_KEY]);
 
-
+#if (numAccessPoints > 1)
   Serial.print(F("Ep SSID1: "));
   Serial.println(AppConfig.access_point[1][indx_SSID]);
 
   Serial.print(F("Ep Key1: "));
   Serial.println(AppConfig.access_point[1][indx_KEY]);
+#endif
 
-
+#if (numAccessPoints > 2)
   Serial.print(F("Ep SSID2: "));
   Serial.println(AppConfig.access_point[2][indx_SSID]);
 
   Serial.print(F("Ep Key2: "));
   Serial.println(AppConfig.access_point[2][indx_KEY]);
+#endif
 
-
+#if (numAccessPoints > 3)
   Serial.print(F("Ep SSID3: "));
   Serial.println(AppConfig.access_point[3][indx_SSID]);
 
   Serial.print(F("Ep Key3: "));
   Serial.println(AppConfig.access_point[3][indx_KEY]);
+#endif
 
-
+#if (numAccessPoints > 4)
   Serial.print(F("Ep SSID4: "));
   Serial.println(AppConfig.access_point[4][indx_SSID]);
 
   Serial.print(F("Ep Key4: "));
   Serial.println(AppConfig.access_point[4][indx_KEY]);
-
+#endif
 
 
   Serial.print(F("End Point IP:"));
